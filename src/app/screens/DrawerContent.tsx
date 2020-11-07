@@ -82,8 +82,6 @@ function DrawerContent(props: any) {
             <Text>Sign out</Text>
           </TouchableOpacity>
         </View>
-
-     
       </Drawer.Section>
     </View>
   );

@@ -5,15 +5,15 @@ import CalendarStrip from 'react-native-calendar-strip';
 import DatePicker from 'react-native-datepicker';
 import moment from 'moment';
 function Appointment() {
-    const today = moment().format('MMMM Do YYYY');
-    const minDate = moment().format('YYYY-MM-DD');
+  const today = moment().format('MMMM Do YYYY');
+  const minDate = moment().format('YYYY-MM-DD');
   const [selectedValue, setSelectedValue] = useState('Square');
   return (
     <>
       <SafeAreaView>
-        <View style={{flexDirection:'row'}}>
+        <View style={{flexDirection: 'row'}}>
           <Picker
-            style={{height: 20, width: 150,flex:1}}
+            style={{height: 20, width: 150, flex: 1}}
             selectedValue={selectedValue}
             onValueChange={(itemValue, itemIndex) =>
               setSelectedValue(itemValue)
@@ -22,7 +22,7 @@ function Appointment() {
             <Picker.Item label="Square" value="sq" />
           </Picker>
           <DatePicker
-            style={{width: 150,flex:1}}
+            style={{width: 150, flex: 1}}
             date={today}
             mode="date"
             placeholder="select date"
@@ -31,21 +31,22 @@ function Appointment() {
             minDate={minDate}
             confirmBtnText="Confirm"
             cancelBtnText="Cancel"
-            // customStyles={{
-            //   dateIcon: {
-            //     position: 'absolute',
-            //     left: 0,
-            //     top: 4,
-            //     marginLeft: 0,
-            //   },
-            //   dateInput: {
-            //     marginLeft: 36,
-            //   },
-            //   // ... You can check the source to find the other keys.
+            customStyles={{
+              dateIcon: {
+                position: 'absolute',
+                left: 0,
+                top: 4,
+                marginLeft: 0,
+              },
+              dateInput: {
+                marginLeft: 36,
+                fontWeight: 'bold',
+              },
+              // ... You can check the source to find the other keys.
+            }}
+            // onDateChange={(date) => {
+            //   this.setState({date: date});
             // }}
-            //   onDateChange={(date) => {
-            //     this.setState({date: date});
-            //   }}
           />
         </View>
 
@@ -53,7 +54,7 @@ function Appointment() {
           style={{height: 70}}
           minDate={minDate}
           //   onHeaderSelected={('2020-11-10', '2020-11-17')}
-            calendarHeaderPosition="hidden"
+          calendarHeaderPosition="hidden"
         />
       </SafeAreaView>
       <AppointmentTabs />
