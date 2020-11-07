@@ -5,7 +5,7 @@ import CalendarStrip from 'react-native-calendar-strip';
 import DatePicker from 'react-native-datepicker';
 import moment from 'moment';
 function Appointment() {
-  const today = moment().format('YYYY-MM-DD');
+  const today = moment().format('MMMM Do YYYY');
   const [selectedValue, setSelectedValue] = useState('Square');
   return (
     <>
@@ -25,7 +25,8 @@ function Appointment() {
             date={today}
             mode="date"
             placeholder="select date"
-            format="MMMM, YYYY"
+            format="MMMM Do YYYY"
+            // format="YYYY-MM-DD"
             minDate={today}
             confirmBtnText="Confirm"
             cancelBtnText="Cancel"
