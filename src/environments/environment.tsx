@@ -1,5 +1,5 @@
 const PROD_URL = 'https://api.jotno.net';
-const DEV_URL = 'http://103.218.25.166:9999';
+const DEV_URL = 'http://staging1.jotno.net/';
 
 export const PRODUCTION: boolean = false;
 

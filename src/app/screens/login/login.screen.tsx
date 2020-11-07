@@ -1,43 +1,137 @@
-import React from 'react';
-import {SafeAreaView, View, StyleSheet, TextInput, Button} from 'react-native';
-import {Switch} from 'react-native-switch';
+import React, {useState} from 'react';
+import {
+  View,
+  KeyboardAvoidingView,
+  Image,
+  Text,
+  StatusBar,
+  Alert,
+  TextInput,
+  SafeAreaView,
+  ScrollView,
+} from 'react-native';
+import {useDispatch} from 'react-redux';
+import * as authAction from '../../store/redux-storage/auth/auth.action';
+import styles from './login.style';
 
-function Login() {
+import fontSize from '../../constants/common/font.size';
+import colors from '../../constants/common/colors';
+import common from '../../constants/common/common';
+import SwitchSelectorComponent from '../../components/ui/switch-selector/switch.selector.component';
+import {SelectItem} from '../../domains/util/utils.interface';
+import ButtonComponent from '../../components/ui/button/button.component';
+import {AxiosError} from 'axios';
+import {UserCredential} from '../../domains/auth/user.credential';
+
+const LoginScreen = (props: any) => {
+  // const dispatch = useDispatch();
+  const [doctorType, setDoctorType] = useState('MEDICAL');
+  const [username, setUserName] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const options: SelectItem[] = [
+    {label: 'Medical', value: 'MEDICAL'},
+    {label: 'Dental', value: 'DENTAL'},
+  ];
+
+  const loginFn = () => {
+    setIsLoading(true);
+
+    let userCredential: UserCredential = new UserCredential();
+    userCredential.doctorType = doctorType;
+    userCredential.password = password;
+    userCredential.userType = 'DOCTOR';
+    userCredential.username = username;
+
+    dispatch(authAction.login(userCredential)).then(
+      (resolve) => {
+        setIsLoading(false);
+        dispatch(authAction.fetchAuthInfo());
+        props.navigation.navigate('Organizations');
+      },
+      (reject: AxiosError) => {
+        setIsLoading(false);
+
+        let message: string = 'Network Error';
+        let request: string =
+          'Please check your internet connection and try again.';
+        if (reject && reject.response && reject.response.status) {
+          message = 'Incorrect BMDC number or password';
+          request = 'Please correct them and try again.';
+        }
+
+        Alert.alert(message, request, [{text: 'Okay'}]);
+      },
+    );
+  };
+
   return (
-    <SafeAreaView>
-      <View >
-        <Switch
-          value={true}
-          onValueChange={(val) => console.log(val)}
-          disabled={false}
-          activeText={'Medical'}
-          inActiveText={'Dental'}
-          circleSize={30}
-          barHeight={1}
-          circleBorderWidth={3}
-          backgroundActive={'white'}
-          backgroundInactive={'gray'}
-          circleActiveColor={'#30a566'}
-          circleInActiveColor={'#000000'}
-          changeValueImmediately={true}
-          // custom component to render inside the Switch circle (Text, Image, etc.)
-          // if rendering inside circle, change state immediately or wait for animation to complete
-          innerCircleStyle={{alignItems: 'center', justifyContent: 'center'}} // style for inner animated circle for what you (may) be rendering inside the circle
-          outerCircleStyle={{}} // style for outer animated circle
-          renderActiveText={false}
-          renderInActiveText={false}
-          switchLeftPx={2} // denominator for logic when sliding to TRUE position. Higher number = more space from RIGHT of the circle to END of the slider
-          switchRightPx={2} // denominator for logic when sliding to FALSE position. Higher number = more space from LEFT of the circle to BEGINNING of the slider
-          switchWidthMultiplier={2} // multipled by the `circleSize` prop to calculate total width of the Switch
-          switchBorderRadius={30} // Sets the border Radius of the switch slider. If unset, it remains the circleSize.
-        />
+    <SafeAreaView style={styles.container}>
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor={colors.BRAND}
+        translucent={true}
+      />
+      <ScrollView
+        contentContainerStyle={styles.scollContainer}
+        keyboardShouldPersistTaps="handled">
+        <View style={{alignItems: 'center'}}>
+          <View style={styles.loginPageLogoContainer}>
+            <Image
+              style={styles.jotnoLogo}
+              source={require('../../../assets/images/logo-solid.jpg')}
+            />
+            <Text style={styles.title}>MAKING HEALTHCARE DIGITAL</Text>
+          </View>
+        </View>
 
-        <TextInput placeholder="BMDC Number"  />
-        <TextInput placeholder="Password" />
-        <Button title="Login" onPress={() => ()}/>
-      </View>
+        <KeyboardAvoidingView behavior="padding">
+          <View style={styles.switchButton}>
+            <View style={{width: '45%'}}>
+              <SwitchSelectorComponent
+                options={options}
+                selectedItem={doctorType}
+                onItemSelectFn={(type) => setDoctorType(type.toString())}
+              />
+            </View>
+
+            <TextInput
+              style={styles.doctorBMDC}
+              placeholder="BMDC number"
+              placeholderTextColor={colors.PRIMARY}
+              value={username}
+              onChangeText={(text) => setUserName(text)}
+              autoCapitalize="none"
+              keyboardType="numeric"
+            />
+          </View>
+
+          <View style={{width: '100%', marginBottom: common.MARGIN}}>
+            <TextInput
+              style={styles.doctorPassword}
+              placeholder="Password"
+              placeholderTextColor={colors.PRIMARY}
+              secureTextEntry={true}
+              value={password}
+              onChangeText={(text) => setPassword(text)}
+              autoCapitalize="none"
+            />
+          </View>
+
+          <ButtonComponent
+            label="Doctor's Login"
+            // disabled={isLoading}
+            onPress={() => {
+              props.navigation.navigate('Organizations');
+              console.log('Done');
+            }}
+            // onPress={loginFn}
+          />
+        </KeyboardAvoidingView>
+      </ScrollView>
     </SafeAreaView>
   );
-}
+};
 
-export default Login;
+export default LoginScreen;

@@ -1,0 +1,9 @@
+export default {
+  ACTIVE_OPACITY: 0.7,
+  INPUT_HEIGHT: 57,
+  ICON_SIZE: 25,
+  MARGIN: 10,
+  PADDING: 15,
+  HORIZONTAL: 10,
+  VERTICAL: 5,
+};
