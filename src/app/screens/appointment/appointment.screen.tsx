@@ -5,7 +5,8 @@ import CalendarStrip from 'react-native-calendar-strip';
 import DatePicker from 'react-native-datepicker';
 import moment from 'moment';
 function Appointment() {
-  const today = moment().format('MMMM Do YYYY');
+    const today = moment().format('MMMM Do YYYY');
+    const minDate = moment().format('YYYY-MM-DD');
   const [selectedValue, setSelectedValue] = useState('Square');
   return (
     <>
@@ -27,7 +28,7 @@ function Appointment() {
             placeholder="select date"
             format="MMMM Do YYYY"
             // format="YYYY-MM-DD"
-            minDate={today}
+            minDate={minDate}
             confirmBtnText="Confirm"
             cancelBtnText="Cancel"
             // customStyles={{
@@ -50,7 +51,7 @@ function Appointment() {
 
         <CalendarStrip
           style={{height: 70}}
-          minDate={today}
+          minDate={minDate}
           //   onHeaderSelected={('2020-11-10', '2020-11-17')}
             calendarHeaderPosition="hidden"
         />
