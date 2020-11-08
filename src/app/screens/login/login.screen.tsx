@@ -24,7 +24,7 @@ import {AxiosError} from 'axios';
 import {UserCredential} from '../../domains/auth/user.credential';
 
 const LoginScreen = (props: any) => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const [doctorType, setDoctorType] = useState('MEDICAL');
   const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
@@ -45,7 +45,7 @@ const LoginScreen = (props: any) => {
     userCredential.username = username;
 
     dispatch(authAction.login(userCredential)).then(
-      (resolve) => {
+      resolve => {
         setIsLoading(false);
         dispatch(authAction.fetchAuthInfo());
         props.navigation.navigate('Organizations');
@@ -121,12 +121,12 @@ const LoginScreen = (props: any) => {
 
           <ButtonComponent
             label="Doctor's Login"
-            // disabled={isLoading}
-            onPress={() => {
-              props.navigation.navigate('Organizations');
-              console.log('Done');
-            }}
-            // onPress={loginFn}
+            disabled={isLoading}
+            // onPress={() => {
+            //   props.navigation.navigate('Organizations');
+            //   console.log('Done');
+            // }}
+            onPress={loginFn}
           />
         </KeyboardAvoidingView>
       </ScrollView>

@@ -3,9 +3,11 @@ import {View, Text, SafeAreaView, Picker} from 'react-native';
 import {AppointmentTabs} from '../../navigation/TabNavigator';
 import CalendarStrip from 'react-native-calendar-strip';
 import DatePicker from 'react-native-datepicker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
 function Appointment() {
-  const today = moment().format('MMMM Do YYYY');
+  const [date, setDate] = useState(moment().format('MMMM Do YYYY'));
+  // const today = moment().format('MMMM Do YYYY');
   const minDate = moment().format('YYYY-MM-DD');
   const [selectedValue, setSelectedValue] = useState('Square');
   return (
@@ -23,12 +25,14 @@ function Appointment() {
           </Picker>
           <DatePicker
             style={{width: 150, flex: 1}}
-            date={today}
+            date={date}
             mode="date"
             placeholder="select date"
-            format="MMMM Do YYYY"
+            format="MMMM Do, YYYY"
             // format="YYYY-MM-DD"
             minDate={minDate}
+            // showIcon={false}
+
             confirmBtnText="Confirm"
             cancelBtnText="Cancel"
             customStyles={{
@@ -40,14 +44,21 @@ function Appointment() {
               },
               dateInput: {
                 marginLeft: 36,
-                fontWeight: 'bold',
               },
               // ... You can check the source to find the other keys.
             }}
-            // onDateChange={(date) => {
-            //   this.setState({date: date});
-            // }}
+            onDateChange={(date) => {
+              setDate(date);
+            }}
           />
+          {/* <DateTimePicker
+            testID="dateTimePicker"
+            value={today}
+            mode="date"
+            is24Hour={true}
+            display="default"
+            onChange={onChange}
+          /> */}
         </View>
 
         <CalendarStrip
@@ -55,6 +66,8 @@ function Appointment() {
           minDate={minDate}
           //   onHeaderSelected={('2020-11-10', '2020-11-17')}
           calendarHeaderPosition="hidden"
+          // startingDate={}
+          // onDateSelected
         />
       </SafeAreaView>
       <AppointmentTabs />

@@ -5,9 +5,9 @@ import RootDrawer from './RootDrawer';
 
 function MainNavigator() {
   return (
-    // <RootStack />
+    <RootStack />
 
-    <RootDrawer />
+    // <RootDrawer />
   );
 }
 

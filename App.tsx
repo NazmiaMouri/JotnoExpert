@@ -10,6 +10,10 @@ import React from 'react';
 import {SafeAreaView, StatusBar, StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import MainNavigator from './src/app/navigation/MainNavigator';
+import {Provider} from 'react-redux';
+import {rootStore} from './src/app/store/redux-storage/root/store';
+
+const store = rootStore;
 
 const App: () => React$Node = () => {
   return (
@@ -17,9 +21,11 @@ const App: () => React$Node = () => {
       <StatusBar barStyle="dark-content" />
       <SafeAreaView style={styles.container}>
         <StatusBar barStyle="light-content" />
-        <NavigationContainer>
-          <MainNavigator />
-        </NavigationContainer>
+        <Provider store={store}>
+          <NavigationContainer>
+            <MainNavigator />
+          </NavigationContainer>
+        </Provider>
       </SafeAreaView>
     </>
   );
