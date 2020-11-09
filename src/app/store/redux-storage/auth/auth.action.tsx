@@ -3,15 +3,15 @@ import http from '../../../core/api/http';
 import * as asyncStorage from '../../async-storage/async.storage';
 import {AxiosError, AxiosResponse} from 'axios';
 import {UserCredential} from '../../../domains/auth/user.credential';
-// import {RESET_ORG_STATE} from '../organization/organization.action';
+import {RESET_ORG_STATE} from '../organization/organization.action';
 // import {RESET_APPOINTMENT_STATE} from '../appointment/appointment.action';
 
 export const LOGOUT = 'LOGOUT';
 export const FETCH_AUTH_INFO = 'FETCH_AUTH_INFO';
 export const SET_AUTH_INFO = 'SET_AUTH_INFO';
 
-const LOGIN_URL = '/login';
-const LOGOUT_URL = '/logout';
+const LOGIN_URL = '/auth/login';
+const LOGOUT_URL = '/auth/logout';
 const USER_AUTH_INFO_URL = '/users/authInfo';
 
 export const login = (userCredential: UserCredential) => {
@@ -25,22 +25,24 @@ export const login = (userCredential: UserCredential) => {
   };
 };
 
-// export const logout = () => {
-//   return async (dispatch) => {
-//     await http.post(LOGOUT_URL).then(
-//       (res) => {
-//         asyncStorage.clear();
-//       },
-//       (reject) => {
-//         asyncStorage.clear();
-//         throw reject;
-//       },
-//     );
-//     dispatch({type: LOGOUT});
-//     dispatch({type: RESET_ORG_STATE});
-//     dispatch({type: RESET_APPOINTMENT_STATE});
-//   };
-// };
+export const logout = () => {
+  return async (dispatch) => {
+    await http.post(LOGOUT_URL).then(
+      (res) => {
+        asyncStorage.clear();
+        console.log('clear');
+      },
+      (reject) => {
+        asyncStorage.clear();
+        console.log('not clear');
+        throw reject;
+      },
+    );
+    dispatch({type: LOGOUT});
+    dispatch({type: RESET_ORG_STATE});
+    // dispatch({type: RESET_APPOINTMENT_STATE});
+  };
+};
 
 export const clearAuth = () => {
   return (dispatch) => {
@@ -55,6 +57,7 @@ export const fetchAuthInfo = () => {
       (res) => {
         const userAuthInfo: UserAuthInfo = res.data.data;
         dispatch({type: FETCH_AUTH_INFO, userAuthInfo: userAuthInfo});
+        console.log(res.data.data);
       },
       (reject) => {
         throw reject;

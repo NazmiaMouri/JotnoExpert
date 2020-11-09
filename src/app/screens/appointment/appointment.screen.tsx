@@ -6,10 +6,37 @@ import DatePicker from 'react-native-datepicker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
 function Appointment() {
-  const [date, setDate] = useState(moment().format('MMMM Do YYYY'));
+  const [date, setDate] = useState(moment());
+  const [selected, setSelected] = useState(moment());
   // const today = moment().format('MMMM Do YYYY');
   const minDate = moment().format('YYYY-MM-DD');
   const [selectedValue, setSelectedValue] = useState('Square');
+
+  const onDatePress = (day) => {
+    setSelected(day._d);
+  };
+
+  const customDatesStylesFunc = (Eachdate) => {
+    console.log(date.format('YYYY-MM-DD'));
+    console.log(Eachdate.format('YYYY-MM-DD'));
+    console.log(selected.format('YYYY-MM-DD'));
+
+    if (
+      Eachdate.format('YYYY-MM-DD') === date.format('YYYY-MM-DD') ||
+      Eachdate.format('YYYY-MM-DD') === selected.format('YYYY-MM-DD')
+    ) {
+      console.log('got it');
+      // Fridays
+      return {
+        dateNameStyle: {color: 'blue'},
+        dateNumberStyle: {color: 'purple'},
+        dateContainerStyle: {color: 'yellow'},
+      };
+    } else {
+      console.log('not matched');
+    }
+  };
+
   return (
     <>
       <SafeAreaView>
@@ -23,16 +50,14 @@ function Appointment() {
             <Picker.Item label="Labaid" value="lab" />
             <Picker.Item label="Square" value="sq" />
           </Picker>
+
           <DatePicker
             style={{width: 150, flex: 1}}
             date={date}
             mode="date"
             placeholder="select date"
             format="MMMM Do, YYYY"
-            // format="YYYY-MM-DD"
             minDate={minDate}
-            // showIcon={false}
-
             confirmBtnText="Confirm"
             cancelBtnText="Cancel"
             customStyles={{
@@ -45,29 +70,21 @@ function Appointment() {
               dateInput: {
                 marginLeft: 36,
               },
-              // ... You can check the source to find the other keys.
             }}
             onDateChange={(date) => {
               setDate(date);
             }}
           />
-          {/* <DateTimePicker
-            testID="dateTimePicker"
-            value={today}
-            mode="date"
-            is24Hour={true}
-            display="default"
-            onChange={onChange}
-          /> */}
         </View>
 
         <CalendarStrip
           style={{height: 70}}
+          customDatesStyles={customDatesStylesFunc}
           minDate={minDate}
-          //   onHeaderSelected={('2020-11-10', '2020-11-17')}
+          scrollable={false}
+          // selectedDate={date}
           calendarHeaderPosition="hidden"
-          // startingDate={}
-          // onDateSelected
+          onDateSelected={onDatePress}
         />
       </SafeAreaView>
       <AppointmentTabs />

@@ -1,24 +1,13 @@
 import React from 'react';
 import {View, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import {Avatar} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {StackActions} from '@react-navigation/native';
 import Dashboard from '../screens/dashboard/dashboard.screen';
 import Appointment from '../screens/appointment/appointment.screen';
 import Prescription from '../screens/prescription/prescription.screen';
 import Patient from '../screens/patient/patient.screen';
 import {createStackNavigator} from '@react-navigation/stack';
-import OrganizationList from '../screens/organization/organization.screen';
-import {AppointmentTabs} from './TabNavigator';
-const Stack = createStackNavigator();
 
-// export function OrganizationStack() {
-//   return (
-//     <Stack.Navigator headerMode="none">
-//       <Stack.Screen name="Organizations" component={OrganizationList} />
-//     </Stack.Navigator>
-//   );
-// }
+const Stack = createStackNavigator();
 export function DashboardStack(props) {
   return (
     <Stack.Navigator
@@ -39,11 +28,8 @@ export function DashboardStack(props) {
             return (
               <View style={{flexDirection: 'row'}}>
                 <Image
-                  style={{width: 50, height: 50, margin: 10}}
-                  source={require('../../assets/images/logo-solid.jpg')}
-                  onPress={() => {
-                    StackActions.push('Dashboard');
-                  }}
+                  style={{width: 70, height: 20, margin: 10}}
+                  source={require('../../assets/images/jotno-blank-h.png')}
                 />
               </View>
             );
@@ -90,8 +76,8 @@ export function AppointmentStack({navigation}) {
                     navigation.navigate('Dashboard');
                   }}>
                   <Image
-                    style={{width: 50, height: 50, margin: 10}}
-                    source={require('../../assets/images/logo-solid.jpg')}
+                    style={{width: 70, height: 20, margin: 10}}
+                    source={require('../../assets/images/jotno-blank-h.png')}
                   />
                 </TouchableOpacity>
               </View>
@@ -138,8 +124,8 @@ export function PrescriptionStack({navigation}) {
                     navigation.navigate('Dashboard');
                   }}>
                   <Image
-                    style={{width: 50, height: 50, margin: 10}}
-                    source={require('../../assets/images/logo-solid.jpg')}
+                    style={{width: 70, height: 20, margin: 10}}
+                    source={require('../../assets/images/jotno-blank-h.png')}
                   />
                 </TouchableOpacity>
               </View>
@@ -186,8 +172,8 @@ export function PatientStack({navigation}) {
                     navigation.navigate('Dashboard');
                   }}>
                   <Image
-                    style={{width: 50, height: 50, margin: 10}}
-                    source={require('../../assets/images/logo-solid.jpg')}
+                    style={{width: 70, height: 20, margin: 10}}
+                    source={require('../../assets/images/jotno-blank-h.png')}
                   />
                 </TouchableOpacity>
               </View>

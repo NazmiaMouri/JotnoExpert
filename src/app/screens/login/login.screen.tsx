@@ -39,15 +39,17 @@ const LoginScreen = (props: any) => {
     setIsLoading(true);
 
     let userCredential: UserCredential = new UserCredential();
+    console.log(userCredential);
     userCredential.doctorType = doctorType;
     userCredential.password = password;
     userCredential.userType = 'DOCTOR';
     userCredential.username = username;
 
     dispatch(authAction.login(userCredential)).then(
-      resolve => {
+      (resolve) => {
         setIsLoading(false);
         dispatch(authAction.fetchAuthInfo());
+        console.log('resolved');
         props.navigation.navigate('Organizations');
       },
       (reject: AxiosError) => {

@@ -1,19 +1,28 @@
 import React from 'react';
 import {View, StyleSheet, TouchableOpacity, Text} from 'react-native';
 import {Avatar, Title, Caption, Paragraph, Drawer} from 'react-native-paper';
+import * as authAction from '../store/redux-storage/auth/auth.action';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
-
+import {AxiosError} from 'axios';
+import {useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // import {AuthContext} from './context';
 
 function DrawerContent(props: any) {
+  const dispatch = useDispatch();
   //   const [isDarkTheme, setIsDarkTheme] = useState(false);
   //   const {signOut} = React.useContext(AuthContext);
   //   const [selectedValue, setSelectedValue] = useState('java');
   //   const toggleTheme = () => {
   //     setIsDarkTheme(!isDarkTheme);
   //   };
+  const logoutFn = () => {
+    dispatch(authAction.logout()).then((resolve) => {
+      dispatch(authAction.clearAuth());
+      props.navigation.push('login');
+    });
+  };
 
   return (
     <View style={{flex: 1}}>
@@ -73,13 +82,17 @@ function DrawerContent(props: any) {
       </DrawerContentScrollView>
       <Drawer.Section style={styles.bottomDrawerSection}>
         <View style={{flexDirection: 'row', paddingLeft: 20, paddingTop: 20}}>
-          <TouchableOpacity style={{flex: 1}}>
+          <TouchableOpacity
+            style={{flex: 1}}
+            onPress={() => {
+              props.navigation.navigate('Profile');
+            }}>
             <Icon name="account-circle" size={25} color="grey" />
             <Text>Profile</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{flex: 1}}>
+          <TouchableOpacity style={{flex: 1}} onPress={logoutFn}>
             <Icon name="exit-to-app" size={20} color="grey" />
-            <Text>Sign out</Text>
+            <Text>Log out</Text>
           </TouchableOpacity>
         </View>
       </Drawer.Section>

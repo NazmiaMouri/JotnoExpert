@@ -7,6 +7,7 @@ import {
   PrescriptionStack,
   PatientStack,
 } from './StackNavigators';
+import Profile from '../screens/profile/profile.screen';
 
 const Drawer = createDrawerNavigator();
 function RootDrawer() {
@@ -16,6 +17,8 @@ function RootDrawer() {
       <Drawer.Screen name="Appointment" component={AppointmentStack} />
       <Drawer.Screen name="Prescription" component={PrescriptionStack} />
       <Drawer.Screen name="Patient" component={PatientStack} />
+
+      <Drawer.Screen name="Profile" component={Profile} />
     </Drawer.Navigator>
   );
 }

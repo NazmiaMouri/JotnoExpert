@@ -6,15 +6,18 @@ const http = axios.create({
 });
 
 const requestHandler = (request: AxiosRequestConfig) => {
+  const url = request.url;
+  if (!url.startsWith('/auth')) {
+    request.url = '/api' + url;
+  }
+
   if (!PRODUCTION) {
     console.log(request.baseURL + request.url);
-    if (!request.url.startsWith('/auth')) {
-      request.url = '/api' + request.url;
-    }
     if (request.params) {
       console.log(request.params);
     }
   }
+
   return request;
 };
 
