@@ -5,7 +5,11 @@ import Dashboard from '../screens/dashboard/dashboard.screen';
 import Appointment from '../screens/appointment/appointment.screen';
 import Prescription from '../screens/prescription/prescription.screen';
 import Patient from '../screens/patient/patient.screen';
+import PatientDetail from '../screens/patient/patientDetail.screen';
+import Settings from '../screens/settings/settings.screen';
+import Profile from '../screens/profile/profile.screen';
 import {createStackNavigator} from '@react-navigation/stack';
+import PasswordScreen from '../screens/settings/password/password.screen';
 
 const Stack = createStackNavigator();
 export function DashboardStack(props) {
@@ -163,6 +167,105 @@ export function PatientStack({navigation}) {
       <Stack.Screen
         name="Patient"
         component={Patient}
+        options={{
+          headerRight: () => {
+            return (
+              <View style={{flexDirection: 'row'}}>
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate('Dashboard');
+                  }}>
+                  <Image
+                    style={{width: 70, height: 20, margin: 10}}
+                    source={require('../../assets/images/jotno-blank-h.png')}
+                  />
+                </TouchableOpacity>
+              </View>
+            );
+          },
+          headerLeft: () => {
+            return (
+              <View style={{flexDirection: 'row'}}>
+                <Icon
+                  name="bars"
+                  color="#fff"
+                  size={26}
+                  style={[styles.calenderBtnWrapper, styles.shadow]}
+                  onPress={() => navigation.openDrawer()}></Icon>
+              </View>
+            );
+          },
+        }}
+      />
+      <Stack.Screen name="Patient Attending" component={PatientDetail} />
+    </Stack.Navigator>
+  );
+}
+export function SettingStack({navigation}) {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: 'rgb(53,156,164)',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}>
+      <Stack.Screen
+        name="Settings"
+        component={Settings}
+        options={{
+          headerRight: () => {
+            return (
+              <View style={{flexDirection: 'row'}}>
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate('Dashboard');
+                  }}>
+                  <Image
+                    style={{width: 70, height: 20, margin: 10}}
+                    source={require('../../assets/images/jotno-blank-h.png')}
+                  />
+                </TouchableOpacity>
+              </View>
+            );
+          },
+          headerLeft: () => {
+            return (
+              <View style={{flexDirection: 'row'}}>
+                <Icon
+                  name="bars"
+                  color="#fff"
+                  size={26}
+                  style={[styles.calenderBtnWrapper, styles.shadow]}
+                  onPress={() => navigation.openDrawer()}></Icon>
+              </View>
+            );
+          },
+        }}
+      />
+      <Stack.Screen name="Password" component={PasswordScreen} />
+    </Stack.Navigator>
+  );
+}
+
+export function ProfileStack({navigation}) {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: 'rgb(53,156,164)',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}>
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
         options={{
           headerRight: () => {
             return (

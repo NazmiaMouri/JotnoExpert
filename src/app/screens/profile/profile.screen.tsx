@@ -1,12 +1,82 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {useSelector} from 'react-redux';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+} from 'react-native';
+import {Card, ListItem} from 'react-native-elements';
 import {Header} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import env from '../../../environments/environment';
 function Profile({navigation}) {
+  const doctor = useSelector((state) => state.auth.userAuthInfo || null);
+  function RenderDoctor(props) {
+    const doctor = props.doctor;
+
+    if (doctor != null) {
+      return (
+        <ScrollView>
+          <Card>
+            <Card.Title>
+              {doctor.doctorTitle}
+              {doctor.name}
+            </Card.Title>
+            <Card.Divider />
+
+            <Card.Image
+              style={{justifyContent: 'center', backgroundColor: '#fff'}}>
+              {/* {doctor.photoId ? ( */}
+              <Image
+                style={{ width: 100, height: 100, alignSelf: 'center' }}
+                resizeMode="contain"
+                
+                source={require('../../../assets/images/doctor.png')}
+              />
+              {/* ) : (
+                <Image
+                  style={{width: 100, height: 100, alignSelf: 'center'}}
+                  resizeMode="contain"
+                  source={require('../../../assets/images/doctor.png')}
+                />
+              )} */}
+            </Card.Image>
+
+            <View>
+              <View>
+                <View style={styles.verticalMargin}>
+                  <Text style={[styles.marginRight, {fontWeight: 'bold'}]}>
+                    BMCD No:
+                  </Text>
+                  <Text>{doctor.bmdcNumber}</Text>
+                </View>
+                <View style={styles.verticalMargin}>
+                  <Text style={[styles.marginRight, {fontWeight: 'bold'}]}>
+                    Name :
+                  </Text>
+                  <Text>{doctor.name}</Text>
+                </View>
+                <View style={styles.verticalMargin}>
+                  <Text style={[styles.marginRight, {fontWeight: 'bold'}]}>
+                    Phone:
+                  </Text>
+                  <Text>{doctor.phoneNumber}</Text>
+                </View>
+              </View>
+            </View>
+          </Card>
+        </ScrollView>
+      );
+    } else {
+      return <View></View>;
+    }
+  }
   return (
     <View>
-      <Header
+      {/* <Header
         leftComponent={
           <View style={{flexDirection: 'row'}}>
             <Icon
@@ -31,38 +101,18 @@ function Profile({navigation}) {
             </TouchableOpacity>
           </View>
         }
-      />
-      <Text>I am Profile</Text>
+      /> */}
+      <RenderDoctor doctor={doctor} />
     </View>
   );
 }
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    // marginVertical: 50,
-    justifyContent: 'center',
+  verticalMargin: {
+    marginBottom: 5,
+    flexDirection: 'row',
   },
-  shadow: {
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 1,
-    elevation: 0.1,
-  },
-  calenderBtnWrapper: {
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    backgroundColor: 'transparent',
-  },
-  calenderBtnText: {
-    color: '#fff',
-    fontSize: 14,
-    textTransform: 'uppercase',
-    textDecorationLine: 'underline',
+  marginRight: {
+    marginRight: 5,
   },
 });
 

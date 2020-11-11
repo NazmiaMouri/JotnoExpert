@@ -1,4 +1,5 @@
 import React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
 import DrawerContent from '../screens/DrawerContent';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {
@@ -6,8 +7,11 @@ import {
   AppointmentStack,
   PrescriptionStack,
   PatientStack,
+  SettingStack,
+  ProfileStack
 } from './StackNavigators';
 import Profile from '../screens/profile/profile.screen';
+import OrganizationList from '../screens/organization/organization.screen';
 
 const Drawer = createDrawerNavigator();
 function RootDrawer() {
@@ -17,8 +21,8 @@ function RootDrawer() {
       <Drawer.Screen name="Appointment" component={AppointmentStack} />
       <Drawer.Screen name="Prescription" component={PrescriptionStack} />
       <Drawer.Screen name="Patient" component={PatientStack} />
-
-      <Drawer.Screen name="Profile" component={Profile} />
+      <Drawer.Screen name="Settings" component={SettingStack} />
+      <Drawer.Screen name="Profile" component={ProfileStack} />
     </Drawer.Navigator>
   );
 }

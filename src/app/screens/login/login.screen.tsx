@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   KeyboardAvoidingView,
@@ -10,8 +10,9 @@ import {
   SafeAreaView,
   ScrollView,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import * as authAction from '../../store/redux-storage/auth/auth.action';
+import * as orgAction from '../../store/redux-storage/organization/organization.action';
 import styles from './login.style';
 
 import fontSize from '../../constants/common/font.size';
@@ -25,6 +26,9 @@ import {UserCredential} from '../../domains/auth/user.credential';
 
 const LoginScreen = (props: any) => {
   const dispatch = useDispatch();
+  const doctorId: number = useSelector(
+    (state) => state.auth.userAuthInfo.doctorId || null,
+  );
   const [doctorType, setDoctorType] = useState('MEDICAL');
   const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
@@ -44,7 +48,9 @@ const LoginScreen = (props: any) => {
     userCredential.password = password;
     userCredential.userType = 'DOCTOR';
     userCredential.username = username;
+    // const appData = await asyncStorage.get();
 
+   
     dispatch(authAction.login(userCredential)).then(
       (resolve) => {
         setIsLoading(false);
@@ -100,7 +106,7 @@ const LoginScreen = (props: any) => {
 
             <TextInput
               style={styles.doctorBMDC}
-              placeholder="BMDC number"
+              placeholder="BMDC Number"
               placeholderTextColor={colors.PRIMARY}
               value={username}
               onChangeText={(text) => setUserName(text)}

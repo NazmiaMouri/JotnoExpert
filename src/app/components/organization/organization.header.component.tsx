@@ -39,7 +39,6 @@ const OrganizationHeaderComponent = (props: Props) => {
   const logoutFn = () => {
     dispatch(authAction.logout()).then(props.navigation.push('login'));
   };
-
   // const acceptInvitationFn = (invitationId: number) => {
   //   dispatch(orgAction.acceptInvitation(doctorId, invitationId)).then(() =>
   //     dispatch(orgAction.fetchOrganizations(doctorId)),

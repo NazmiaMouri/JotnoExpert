@@ -77,7 +77,17 @@ function DrawerContent(props: any) {
                 props.navigation.navigate('Prescription');
               }}
             />
+            <DrawerItem
+              icon={({color, size}) => (
+                <Icon name="account-circle" color={color} size={size} />
+              )}
+              label="Settings"
+              onPress={() => {
+                props.navigation.navigate('Settings');
+              }}
+            />
           </Drawer.Section>
+          
         </View>
       </DrawerContentScrollView>
       <Drawer.Section style={styles.bottomDrawerSection}>

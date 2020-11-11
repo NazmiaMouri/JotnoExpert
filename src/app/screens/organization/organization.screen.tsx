@@ -18,6 +18,7 @@ import OrganizationHeaderComponent from '../../components/organization/organizat
 import {Organization} from '../../domains/organization/organization.domain';
 
 const OrganizationList = (props) => {
+  
   const dispatch = useDispatch();
   const {doctorId, doctorTitle, name, photoId} = useSelector(
     (state) => state.auth.userAuthInfo || null,
@@ -59,13 +60,13 @@ const OrganizationList = (props) => {
     props.navigation.navigate('Dashboard');
   };
 
-  if (isLoading) {
-    return (
-      <View style={orgStyles.centered}>
-        <ActivityIndicator size="large" color={colors.ACCENT} />
-      </View>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <View style={orgStyles.centered}>
+  //       <ActivityIndicator size="large" color={colors.ACCENT} />
+  //     </View>
+  //   );
+  // }
 
   return (
     <SafeAreaView style={orgStyles.orgContainer}>
