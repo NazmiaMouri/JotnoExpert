@@ -1,11 +1,15 @@
-import React from 'react';
-import {SafeAreaView} from 'react-native';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, {useState} from 'react';
+import {SafeAreaView, View, Text} from 'react-native';
 
-function PatientDetail() {
+function PatientDetail(props) {
+  const [patient, setPatient] = useState(props.route.params.patient);
   return (
-    <>
-      <SafeAreaView></SafeAreaView>
-    </>
+    <View>
+      <Text>{patient.name}</Text>
+      <Text>{patient.age}</Text>
+      <Text>{patient.gender}</Text>
+    </View>
   );
 }
 
